@@ -28,6 +28,18 @@
         .daan-card .daan-info p {
             @apply text-gray-600 text-sm; /* Consistent paragraph style */
         }
+        .daan-card .image-stack .swipe-overlay {
+            @apply absolute inset-0 w-full h-full flex items-center justify-center text-6xl font-bold text-white opacity-0 transition-opacity duration-200 ease-in-out z-20 pointer-events-none; /* Higher z-index than foreground image, initially hidden */
+        }
+        .daan-card .image-stack .swipe-overlay-no {
+            @apply bg-red-500 bg-opacity-70; /* Semi-transparent red background */
+        }
+        .daan-card .image-stack .swipe-overlay-yes {
+            @apply bg-green-500 bg-opacity-70; /* Semi-transparent green background */
+        }
+        .daan-card .image-stack .swipe-overlay span {
+            @apply transform scale-150; /* Make icon a bit bigger */
+        }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -37,83 +49,7 @@
             <h2 class="text-xl md:text-3xl font-bold text-gray-800 mb-4 text-center">🔥 Hot Daans In Your Area! 🔥</h2>
             <p class="text-gray-600 mb-6 text-center text-sm">They're single and ready to Daan-gle!</p>
             <div class="daan-card-container w-full relative">
-                <!-- Daan Card 1 -->
-                <div class="daan-card absolute w-full bg-white rounded-lg shadow-lg overflow-hidden" data-daan-id="1">
-                    <div class="image-stack">
-                        <img src="photos/image1.png" alt="Blurred background of Daan Sexytime" class="img-background">
-                        <img src="photos/image1.png" alt="Profile picture of Daan Sexytime" class="img-foreground">
-                    </div>
-                    <div class="daan-info">
-                        <h3>Daan Sexytime, 28</h3>
-                        <p>Looking for strong American woman with plow. I like sexy time, high-five, and talking about my glorious nation. You have nice face? Maybe we make romance. </p>
-                    </div>
-                </div>
-                <!-- Daan Card 2 -->
-                <div class="daan-card absolute w-full bg-white rounded-lg shadow-lg overflow-hidden" data-daan-id="2" style="display: none;">
-                    <div class="image-stack">
-                        <img src="photos/image2.png" alt="Blurred background of Daan McFish" class="img-background">
-                        <img src="photos/image2.png" alt="Profile picture of Daan McFish" class="img-foreground">
-                    </div>
-                    <div class="daan-info">
-                        <h3>Daan McFish, 48</h3>
-                        <p>Yes, that's me holding a fish. Yes, I'm heavier than it — but only slightly, and I don’t flop around as much. If you're into dad jokes, fresh air, and a guy who can both bait a hook and text back, I might be your catch of the day.</p>
-                    </div>
-                </div>
-                <!-- Daan Card 3 -->
-                <div class="daan-card absolute w-full bg-white rounded-lg shadow-lg overflow-hidden" data-daan-id="3" style="display: none;">
-                    <div class="image-stack">
-                        <img src="photos/image3.png" alt="Blurred background of Daan Diesel" class="img-background">
-                        <img src="photos/image3.png" alt="Profile picture of Daan Diesel" class="img-foreground">
-                    </div>
-                    <div class="daan-info">
-                        <h3>Daan Diesel, 29</h3>
-                        <p>Certified tall. Gym 6x/week. I moisturize sometimes. Can’t cook, can’t spell “philosiphy,” but I can take my shirt off in under 2 seconds.</p>
-                    </div>
-                </div>
-                <!-- Daan Card 4 -->
-                <div class="daan-card absolute w-full bg-white rounded-lg shadow-lg overflow-hidden" data-daan-id="4" style="display: none;">
-                    <div class="image-stack">
-                        <img src="photos/image4.png" alt="Blurred background of Daan (Coder/Adventurer)" class="img-background">
-                        <img src="photos/image4.png" alt="Profile picture of Daan (Coder/Adventurer)" class="img-foreground">
-                    </div>
-                    <div class="daan-info">
-                        <h3>Daan, 32</h3>
-                        <p>Love a good movie night, a random coding project, or hitting the trails for a run or bike ride. I'm all about fun, whether it’s competitive gaming or spontaneous adventures.</p>
-                    </div>
-                </div>
-                <!-- Daan Card 5 -->
-                <div class="daan-card absolute w-full bg-white rounded-lg shadow-lg overflow-hidden" data-daan-id="14" style="display: none;">
-                    <div class="image-stack">
-                        <img src="photos/image5.png" alt="Blurred background of Daan Spaghetti (Coder/Cook)" class="img-background">
-                        <img src="photos/image5.png" alt="Profile picture of Daan Spaghetti (Coder/Cook)" class="img-foreground">
-                    </div>
-                    <div class="daan-info">
-                        <h3>Daan Spaghetti, 24</h3>
-                        <p>I’m like spaghetti — a little messy, but always a good time. When I’m not coding or running, you’ll find me cooking up something delicious or enjoying a good glass of wine. Swipe right if you like food, laughs, and the occasional kitchen disaster.</p>
-                    </div>
-                </div>
-                <!-- Daan Card 6 -->
-                <div class="daan-card absolute w-full bg-white rounded-lg shadow-lg overflow-hidden" data-daan-id="6" style="display: none;">
-                    <div class="image-stack">
-                        <img src="photos/image6.png" alt="Blurred background of Daan the Doodler" class="img-background">
-                        <img src="photos/image6.png" alt="Profile picture of Daan the Doodler" class="img-foreground">
-                    </div>
-                    <div class="daan-info">
-                        <h3>Daan the Doodler, 27</h3>
-                        <p>Hopping into chats and spreading art! "Anyone want a quick sketch?" is my catchphrase. If you appreciate a creative spirit who's always eager to share a drawing (and maybe a few good vibes), let's connect!</p>
-                    </div>
-                </div>
-                <!-- Daan Card 7 -->
-                <div class="daan-card absolute w-full bg-white rounded-lg shadow-lg overflow-hidden" data-daan-id="7" style="display: none;">
-                    <div class="image-stack">
-                        <img src="photos/image7.png" alt="Blurred background of Pussy Daan" class="img-background">
-                        <img src="photos/image7.png" alt="Profile picture of Pussy Daan with his cat" class="img-foreground">
-                    </div>
-                    <div class="daan-info">
-                        <h3>Daan Meow, 30</h3>
-                        <p>Meow! I'm a dedicated cat dad looking for someone who appreciates a gentle soul and the soothing purr of a happy kitten. My world revolves around my feline friends. If you love cats as much as I do, we might just be a purrfect match!</p>
-                    </div>
-                </div>
+                <!-- Daan cards will be dynamically inserted here by JavaScript -->
                 
                 <div id="no-more-daans" style="display: none; text-align: center; padding: 20px; color: #555;">
                     <h2 class="text-xl font-semibold text-gray-700 mb-2">That's All The Daans For Now!</h2>
@@ -136,11 +72,79 @@
 
     <script>
         const daanCardContainer = document.querySelector('.daan-card-container');
-        const daanCards = document.querySelectorAll('.daan-card');
         const swipeActions = document.querySelector('.swipe-actions');
         const noMoreDaansMessage = document.getElementById('no-more-daans');
         const noButton = document.querySelector('.no-daan');
         const yesButton = document.querySelector('.yes-daan');
+
+        // JSON data for Daan profiles
+        const daanProfiles = [
+            {
+                id: "1",
+                name: "Daan Sexytime",
+                age: 28,
+                description: "Looking for strong American woman with plow. I like sexy time, high-five, and talking about my glorious nation. You have nice face? Maybe we make romance.",
+                image: "photos/image1.png",
+                altBackground: "Blurred background of Daan Sexytime",
+                altForeground: "Profile picture of Daan Sexytime"
+            },
+            {
+                id: "2",
+                name: "Daan McFish",
+                age: 48,
+                description: "Yes, that's me holding a fish. Yes, I'm heavier than it — but only slightly, and I don’t flop around as much. If you're into dad jokes, fresh air, and a guy who can both bait a hook and text back, I might be your catch of the day.",
+                image: "photos/image2.png",
+                altBackground: "Blurred background of Daan McFish",
+                altForeground: "Profile picture of Daan McFish"
+            },
+            {
+                id: "3",
+                name: "Daan Diesel",
+                age: 29,
+                description: "Certified tall. Gym 6x/week. I moisturize sometimes. Can’t cook, can’t spell “philosiphy,” but I can take my shirt off in under 2 seconds.",
+                image: "photos/image3.png",
+                altBackground: "Blurred background of Daan Diesel",
+                altForeground: "Profile picture of Daan Diesel"
+            },
+            {
+                id: "4",
+                name: "Daan",
+                age: 32,
+                description: "Love a good movie night, a random coding project, or hitting the trails for a run or bike ride. I'm all about fun, whether it’s competitive gaming or spontaneous adventures.",
+                image: "photos/image4.png",
+                altBackground: "Blurred background of Daan (Coder/Adventurer)",
+                altForeground: "Profile picture of Daan (Coder/Adventurer)"
+            },
+            {
+                id: "14", // Note: ID kept as in original HTML
+                name: "Daan Spaghetti",
+                age: 24,
+                description: "I’m like spaghetti — a little messy, but always a good time. When I’m not coding or running, you’ll find me cooking up something delicious or enjoying a good glass of wine. Swipe right if you like food, laughs, and the occasional kitchen disaster.",
+                image: "photos/image5.png",
+                altBackground: "Blurred background of Daan Spaghetti (Coder/Cook)",
+                altForeground: "Profile picture of Daan Spaghetti (Coder/Cook)"
+            },
+            {
+                id: "6",
+                name: "Daan the Doodler",
+                age: 27,
+                description: "Hopping into chats and spreading art! \"Anyone want a quick sketch?\" is my catchphrase. If you appreciate a creative spirit who's always eager to share a drawing (and maybe a few good vibes), let's connect!",
+                image: "photos/image6.png",
+                altBackground: "Blurred background of Daan the Doodler",
+                altForeground: "Profile picture of Daan the Doodler"
+            },
+            {
+                id: "7",
+                name: "Daan Meow",
+                age: 30,
+                description: "Meow! I'm a dedicated cat dad looking for someone who appreciates a gentle soul and the soothing purr of a happy kitten. My world revolves around my feline friends. If you love cats as much as I do, we might just be a purrfect match!",
+                image: "photos/image7.png",
+                altBackground: "Blurred background of Pussy Daan",
+                altForeground: "Profile picture of Pussy Daan with his cat"
+            }
+        ];
+
+        let daanCards = []; // Will be populated dynamically
 
         let currentCardIndex = 0;
         let activeCard = null;
@@ -149,13 +153,68 @@
         let isDragging = false;
         let swipeThreshold;
 
+        function createDaanCardElement(daanData) {
+            const card = document.createElement('div');
+            card.className = 'daan-card absolute w-full bg-white rounded-lg shadow-lg overflow-hidden';
+            card.dataset.daanId = daanData.id;
+            card.style.display = 'none'; // Initially hidden
+
+            const imageStack = document.createElement('div');
+            imageStack.className = 'image-stack';
+
+            const imgBackground = document.createElement('img');
+            imgBackground.src = daanData.image;
+            imgBackground.alt = daanData.altBackground;
+            imgBackground.className = 'img-background';
+
+            const imgForeground = document.createElement('img');
+            imgForeground.src = daanData.image;
+            imgForeground.alt = daanData.altForeground;
+            imgForeground.className = 'img-foreground';
+
+            const swipeOverlayNo = document.createElement('div');
+            swipeOverlayNo.className = 'swipe-overlay swipe-overlay-no';
+            swipeOverlayNo.innerHTML = '<span>❌</span>';
+
+            const swipeOverlayYes = document.createElement('div');
+            swipeOverlayYes.className = 'swipe-overlay swipe-overlay-yes';
+            swipeOverlayYes.innerHTML = '<span>💚</span>';
+
+            imageStack.append(imgBackground, imgForeground, swipeOverlayNo, swipeOverlayYes);
+
+            const daanInfo = document.createElement('div');
+            daanInfo.className = 'daan-info';
+            daanInfo.innerHTML = `
+                <h3>${daanData.name}, ${daanData.age}</h3>
+                <p>${daanData.description}</p>
+            `;
+
+            card.append(imageStack, daanInfo);
+            return card;
+        }
+
         function initializeCards() {
+            // Shuffle the daanProfiles array (Fisher-Yates shuffle)
+            for (let i = daanProfiles.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [daanProfiles[i], daanProfiles[j]] = [daanProfiles[j], daanProfiles[i]]; // ES6 destructuring swap
+            }
+
+            // Clear any existing cards in the container (though it should be empty on first load)
+            while (daanCardContainer.firstChild) {
+                daanCardContainer.removeChild(daanCardContainer.firstChild);
+            }
+
+            daanProfiles.forEach(profile => {
+                const cardElement = createDaanCardElement(profile);
+                daanCardContainer.appendChild(cardElement);
+            });
+            daanCards = document.querySelectorAll('.daan-card'); // Update NodeList after creation
+
             if (daanCards.length === 0) {
                 showNoMoreDaans();
                 return;
             }
-            // Hide all cards initially, then show the first one
-            daanCards.forEach(card => card.style.display = 'none');
             setActiveCard(0);
         }
 
@@ -178,6 +237,18 @@
             activeCard.style.transform = 'translateX(0) rotate(0deg)';
             activeCard.style.opacity = '1';
             activeCard.classList.remove('swiped-left', 'swiped-right');
+
+            // Reset overlays for the new card
+            const noOverlay = activeCard.querySelector('.swipe-overlay-no');
+            const yesOverlay = activeCard.querySelector('.swipe-overlay-yes');
+            if (noOverlay) {
+                noOverlay.style.opacity = '0';
+                noOverlay.style.transition = 'opacity 0.2s ease-in-out'; // Default transition for snap-back or initial state
+            }
+            if (yesOverlay) {
+                yesOverlay.style.opacity = '0';
+                yesOverlay.style.transition = 'opacity 0.2s ease-in-out';
+            }
 
             // Set height of container to match active card to prevent layout shifts
             daanCardContainer.style.height = `${activeCard.offsetHeight}px`;
@@ -205,6 +276,13 @@
             isDragging = true;
             startX = event.pageX || event.touches[0].pageX;
             activeCard.style.transition = 'none'; // Disable transition during drag
+
+            // Disable overlay transition during drag
+            const noOverlay = activeCard.querySelector('.swipe-overlay-no');
+            const yesOverlay = activeCard.querySelector('.swipe-overlay-yes');
+            if (noOverlay) noOverlay.style.transition = 'none';
+            if (yesOverlay) yesOverlay.style.transition = 'none';
+
             document.body.style.userSelect = 'none'; // Prevent text selection during drag
             document.addEventListener('mousemove', onDragging);
             document.addEventListener('touchmove', onDragging);
@@ -224,6 +302,24 @@
             currentX = event.pageX || event.touches[0].pageX;
             const deltaX = currentX - startX;
             activeCard.style.transform = `translateX(${deltaX}px) rotate(${deltaX / 20}deg)`;
+
+            // Overlay logic
+            const noOverlay = activeCard.querySelector('.swipe-overlay-no');
+            const yesOverlay = activeCard.querySelector('.swipe-overlay-yes');
+            const opacityFactor = Math.min(Math.abs(deltaX) / swipeThreshold, 1.0);
+
+            if (deltaX < 0) { // Swiping left (No)
+                if (noOverlay) noOverlay.style.opacity = opacityFactor;
+                if (yesOverlay) yesOverlay.style.opacity = 0;
+            } else if (deltaX > 0) { // Swiping right (Yes)
+                if (yesOverlay) yesOverlay.style.opacity = opacityFactor;
+                if (noOverlay) noOverlay.style.opacity = 0;
+            } else { // No drag or centered
+                if (noOverlay) noOverlay.style.opacity = 0;
+                if (yesOverlay) yesOverlay.style.opacity = 0;
+            }
+
+
         }
 
         function onDragEnd(event) {
@@ -259,6 +355,18 @@
                 activeCard.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
                 activeCard.style.transform = 'translateX(0) rotate(0deg)';
                 activeCard.style.opacity = '1'; // Ensure opacity is reset if it was changed during drag
+
+                // Hide overlays smoothly on snap back
+                const noOverlay = activeCard.querySelector('.swipe-overlay-no');
+                const yesOverlay = activeCard.querySelector('.swipe-overlay-yes');
+                if (noOverlay) {
+                    noOverlay.style.transition = 'opacity 0.3s ease-out';
+                    noOverlay.style.opacity = '0';
+                }
+                if (yesOverlay) {
+                    yesOverlay.style.transition = 'opacity 0.3s ease-out';
+                    yesOverlay.style.opacity = '0';
+                }
             }
             // Reset for next interaction
             // startX is set fresh on new onDragStart. currentX is managed during drag.
@@ -270,22 +378,34 @@
             
             const cardWidth = activeCard.offsetWidth;
             let targetX, rotationAngle;
+            const noOverlay = activeCard.querySelector('.swipe-overlay-no');
+            const yesOverlay = activeCard.querySelector('.swipe-overlay-yes');
+
+            // Ensure overlay transitions are brief for this direct action
+            if (noOverlay) noOverlay.style.transition = 'opacity 0.1s ease-in';
+            if (yesOverlay) yesOverlay.style.transition = 'opacity 0.1s ease-in';
 
             if (direction === 'left') {
                 targetX = -(cardWidth + 70); // Move it fully off-screen plus a bit extra
                 rotationAngle = -20; // A bit more rotation
+                if (noOverlay) noOverlay.style.opacity = '1';
+                if (yesOverlay) yesOverlay.style.opacity = '0'; // Ensure other is hidden
             } else { // right
                 targetX = cardWidth + 70;
                 rotationAngle = 20;
+                if (yesOverlay) yesOverlay.style.opacity = '1';
+                if (noOverlay) noOverlay.style.opacity = '0'; // Ensure other is hidden
             }
 
             activeCard.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease-out'; // Smooth ease-out
             activeCard.style.transform = `translateX(${targetX}px) rotate(${rotationAngle}deg)`;
             activeCard.style.opacity = '0';
+            // The overlays are children of activeCard, so they will fade out as activeCard's opacity goes to 0.
             
             // Wait for animation to finish, then move to next card
             setTimeout(() => {
                 activeCard.style.display = 'none'; // Hide the swiped card
+                // Overlays will be reset to hidden by setActiveCard for the next card
                 setActiveCard(currentCardIndex + 1);
             }, 500); // Should match or be slightly longer than the transform transition duration
         }
@@ -295,6 +415,7 @@
 
         // Initialize
         initializeCards();
+
     </script>
 </body>
 </html>
