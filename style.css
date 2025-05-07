@@ -53,7 +53,7 @@ body {
 }
 
 .daan-info {
-    padding: 20px 25px; /* Increased padding */
+    padding: 30px 25px 20px; /* Increased top padding for more space below photo, L/R 25px, bottom 20px */
     text-align: left;
     background-color: #fdfdfd; /* Slightly off-white for info section */
 }
