@@ -7,47 +7,177 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Only Daans</h1>
-        <p>Where every Daan is a star! (Exclusively for Daans, by Daans, about Daans)</p>
-    </header>
-
     <main>
-        <section id="welcome">
-            <h2>Welcome to the Most Daan-tastic Place on the Web!</h2>
-            <p>Tired of the usual? Looking for content that truly speaks to your inner Daan? You've found it!</p>
-            <p>At Only Daans, we celebrate the uniqueness, the charm, and the sheer Daan-ness of Daans everywhere. This is a 100% Daan-positive zone.</p>
-        </section>
+        <section id="daan-swiper">
+            <h2>🔥 Hot Daans In Your Area! 🔥</h2>
+            <p>They're single and ready to Daan-gle! Don't keep them waiting!</p>
+            <div class="daan-card-container">
+                <!-- Daan Card 1 -->
+                <div class="daan-card" data-daan-id="1">
+                    <img src="photos/image1.png" alt="Profile picture of The Ultimate Daan">
+                    <div class="daan-info">
+                        <h3>Daan Sexytime, 28</h3>
+                        <p>Looking for strong American woman with plow. I like sexy time, high-five, and talking about my glorious nation. You have nice face? Maybe we make romance. </p>
+                    </div>
+                </div>
+                <!-- Daan Card 2 -->
+                <div class="daan-card" data-daan-id="2" style="display: none;">
+                    <img src="photos/image2.png" alt="Profile picture of Daan Dynamo">
+                    <div class="daan-info">
+                        <h3>Daan McFish, 32</h3>
+                        <p>Yes, that's me holding a fish. Yes, I'm heavier than it — but only slightly, and I don’t flop around as much. If you're into dad jokes, fresh air, and a guy who can both bait a hook and text back, I might be your catch of the day.</p>
+                    </div>
+                </div>
+                <!-- Daan Card 3 -->
+                <div class="daan-card" data-daan-id="3" style="display: none;">
+                    <img src="photos/image3.png" alt="Profile picture of Daan The Dreamer">
+                    <div class="daan-info">
+                        <h3>Daan Diesel, 29</h3>
+                        <p>Certified tall. Gym 6x/week. I moisturize sometimes. Can’t cook, can’t spell “philosiphy,” but I can take my shirt off in under 2 seconds.</p>
+                    </div>
+                </div>
 
-        <section id="featured-daans">
-            <h2>Meet Our Featured Daans!</h2>
-            <div class="daan-profile-container">
-                <div class="daan-profile">
-                    <img src="https://via.placeholder.com/150/007bff/FFFFFF?text=Daan+1" alt="Placeholder image for Daan 1">
-                    <h3>Daan The Man</h3>
-                    <p>The original trendsetter. Likes long walks and being named Daan.</p>
+                <div id="no-more-daans" style="display: none; text-align: center; padding: 20px; color: #555;">
+                    <h2>That's All The Daans For Now!</h2>
+                    <p>You've Daan-cided on everyone. Check back later for more Daan-tastic profiles!</p>
                 </div>
-                <div class="daan-profile">
-                    <img src="https://via.placeholder.com/150/28a745/FFFFFF?text=Daan+2" alt="Placeholder image for Daan 2">
-                    <h3>Daan-cing Queen</h3>
-                    <p>Known for their Daan-cing skills and infectious Daan-thusiasm.</p>
-                </div>
-                <div class="daan-profile">
-                    <img src="https://via.placeholder.com/150/ffc107/000000?text=Daan+3" alt="Placeholder image for Daan 3">
-                    <h3>Just Daan</h3>
-                    <p>Simply Daan. What more needs to be said?</p>
-                </div>
+            </div>
+            <div class="swipe-actions">
+                <button class="swipe-button no-daan" title="Politely pass on this Daan (for now)">❌</button>
+                <button class="swipe-button yes-daan" title="Yes! This Daan is the one!">💚</button>
             </div>
         </section>
 
-        <section id="join-us">
-            <h2>Are You a Daan?</h2>
-            <p>This space is still under Daan-struction! More Daan-lightful content coming soon. If you're a Daan and want to be featured, well, you're already special!</p>
-        </section>
     </main>
 
     <footer>
-        <p>&copy; 2023 Only Daans. All Daans Reserved. (No Daans were harmed in the making of this website).</p>
+        <p>&copy; 2025 Only Daans. All Daans Reserved. (No Daans were harmed in the making of this website).</p>
     </footer>
+
+    <script>
+        const daanCardContainer = document.querySelector('.daan-card-container');
+        const daanCards = document.querySelectorAll('.daan-card');
+        const swipeActions = document.querySelector('.swipe-actions');
+        const noMoreDaansMessage = document.getElementById('no-more-daans');
+        const noButton = document.querySelector('.no-daan');
+        const yesButton = document.querySelector('.yes-daan');
+
+        let currentCardIndex = 0;
+        let activeCard = null;
+        let startX;
+        let currentX;
+        let isDragging = false;
+        let swipeThreshold;
+
+        function initializeCards() {
+            if (daanCards.length === 0) {
+                showNoMoreDaans();
+                return;
+            }
+            // Hide all cards initially, then show the first one
+            daanCards.forEach(card => card.style.display = 'none');
+            setActiveCard(0);
+        }
+
+        function setActiveCard(index) {
+            if (activeCard) { // Clean up listeners from previous active card
+                activeCard.removeEventListener('mousedown', onDragStart);
+                activeCard.removeEventListener('touchstart', onDragStart);
+            }
+
+            if (index >= daanCards.length) {
+                showNoMoreDaans();
+                return;
+            }
+
+            currentCardIndex = index;
+            activeCard = daanCards[currentCardIndex];
+            
+            // Reset card style
+            activeCard.style.display = 'block'; // Or 'flex' if your card uses flex internally
+            activeCard.style.transform = 'translateX(0) rotate(0deg)';
+            activeCard.style.opacity = '1';
+            activeCard.classList.remove('swiped-left', 'swiped-right');
+            
+            swipeThreshold = activeCard.offsetWidth * 0.35;
+
+            activeCard.addEventListener('mousedown', onDragStart);
+            activeCard.addEventListener('touchstart', onDragStart, { passive: false }); // passive:false because we call preventDefault
+            
+            swipeActions.style.display = 'flex'; // Ensure buttons are visible
+            noMoreDaansMessage.style.display = 'none';
+        }
+
+        function showNoMoreDaans() {
+            if(activeCard) activeCard.style.display = 'none'; // Hide the last swiped card if any
+            swipeActions.style.display = 'none';
+            noMoreDaansMessage.style.display = 'block';
+            activeCard = null; // No active card
+        }
+
+        function onDragStart(event) {
+            if (!activeCard) return;
+            isDragging = true;
+            startX = event.pageX || event.touches[0].pageX;
+            activeCard.style.transition = 'none'; // Disable transition during drag
+            document.addEventListener('mousemove', onDragging);
+            document.addEventListener('touchmove', onDragging);
+            document.addEventListener('mouseup', onDragEnd);
+            document.addEventListener('touchend', onDragEnd);
+        }
+
+        function onDragging(event) {
+            if (!isDragging || !activeCard) return;
+            event.preventDefault(); // Prevent scrolling while dragging card
+            currentX = event.pageX || event.touches[0].pageX;
+            const deltaX = currentX - startX;
+            activeCard.style.transform = `translateX(${deltaX}px) rotate(${deltaX / 20}deg)`;
+        }
+
+        function onDragEnd(event) {
+            if (!isDragging || !activeCard) return;
+            isDragging = false;
+
+            document.removeEventListener('mousemove', onDragging);
+            document.removeEventListener('touchmove', onDragging);
+            document.removeEventListener('mouseup', onDragEnd);
+            document.removeEventListener('touchend', onDragEnd);
+            
+            // Ensure currentX is set if drag was very short (only mousedown/touchstart then mouseup/touchend)
+            if (typeof currentX === 'undefined' || currentX === null) {
+                currentX = startX; 
+            }
+            const deltaX = currentX - startX;
+            activeCard.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+
+            if (Math.abs(deltaX) > swipeThreshold) {
+                const direction = deltaX < 0 ? 'left' : 'right';
+                performSwipeAnimation(direction);
+            } else {
+                activeCard.style.transform = 'translateX(0) rotate(0deg)';
+            }
+            // Reset for next interaction
+            startX = null;
+            currentX = null;
+        }
+
+        function performSwipeAnimation(direction) {
+            if (!activeCard) return;
+            console.log(`Swiped ${direction} on Daan ID: ${activeCard.dataset.daanId}`);
+            activeCard.classList.add(direction === 'left' ? 'swiped-left' : 'swiped-right');
+            
+            // Wait for animation to finish, then move to next card
+            setTimeout(() => {
+                activeCard.style.display = 'none'; // Hide the swiped card
+                setActiveCard(currentCardIndex + 1);
+            }, 300); // Must match CSS transition duration
+        }
+
+        noButton.addEventListener('click', () => performSwipeAnimation('left'));
+        yesButton.addEventListener('click', () => performSwipeAnimation('right'));
+
+        // Initialize
+        initializeCards();
+    </script>
 </body>
 </html>
