@@ -14,6 +14,7 @@
     <meta property="og:url" content="https://onlydaans.com">
     <meta property="og:title" content="OnlyDaans - Find Your Perfect Daan!">
     <meta property="og:description" content="Swipe right on your next Daan! Discover profiles, photos, and bios of eligible Daans ready to Daan-gle.">
+    <meta property="og:image" content="https://onlydaans.com/photos/og-daan-default.png"> <!-- Replace with a real URL to an engaging preview image -->
 
     <!-- Include Tailwind CSS via CDN -->
     <style type="text/tailwindcss">
@@ -79,14 +80,16 @@
 
     <footer class="mt-8 text-center text-gray-600">
         <p>&copy; 2025 Only Daans. All Daans Reserved.</p>
+        <button id="reset-swipes-button" class="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded shadow-md text-sm transition-colors duration-150">Reset Swiped Daans</button>
     </footer>
 
     <script>
         const daanCardContainer = document.querySelector('.daan-card-container');
         const swipeActions = document.querySelector('.swipe-actions');
         const noMoreDaansMessage = document.getElementById('no-more-daans');
-        const noButton = document.querySelector('.no-daan');
-        const yesButton = document.querySelector('.yes-daan');
+        const noButton = document.querySelector('.swipe-button.no-daan');
+        const yesButton = document.querySelector('.swipe-button.yes-daan');
+        const resetButton = document.getElementById('reset-swipes-button');
 
         // JSON data for Daan profiles
         const daanProfiles = [
@@ -164,6 +167,24 @@
         let isDragging = false;
         let swipeThreshold;
 
+        const SWIPED_DAANS_STORAGE_KEY = 'onlyDaans_swipedDaans';
+
+        function getSwipedDaans() {
+            const swiped = localStorage.getItem(SWIPED_DAANS_STORAGE_KEY);
+            try {
+                return swiped ? JSON.parse(swiped) : {};
+            } catch (e) {
+                console.error("Error parsing swiped Daans from localStorage:", e);
+                return {}; // Return empty object on error
+            }
+        }
+
+        function saveSwipedDaan(daanId) {
+            const swipedDaans = getSwipedDaans();
+            swipedDaans[daanId] = true;
+            localStorage.setItem(SWIPED_DAANS_STORAGE_KEY, JSON.stringify(swipedDaans));
+        }
+
         function createDaanCardElement(daanData) {
             const card = document.createElement('div');
             card.className = 'daan-card absolute w-full bg-white rounded-lg shadow-lg overflow-hidden';
@@ -205,18 +226,27 @@
         }
 
         function initializeCards() {
-            // Shuffle the daanProfiles array (Fisher-Yates shuffle)
-            for (let i = daanProfiles.length - 1; i > 0; i--) {
+            const swipedDaans = getSwipedDaans();
+            
+            // Filter out already swiped Daans
+            let availableDaans = daanProfiles.filter(profile => !swipedDaans[profile.id]);
+
+            // Shuffle the availableDaans array (Fisher-Yates shuffle)
+            for (let i = availableDaans.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [daanProfiles[i], daanProfiles[j]] = [daanProfiles[j], daanProfiles[i]]; // ES6 destructuring swap
+                [availableDaans[i], availableDaans[j]] = [availableDaans[j], availableDaans[i]]; // ES6 destructuring swap
             }
 
-            // Clear any existing cards in the container (though it should be empty on first load)
-            while (daanCardContainer.firstChild) {
-                daanCardContainer.removeChild(daanCardContainer.firstChild);
+            // Clear only existing Daan cards from the container, leaving other elements like noMoreDaansMessage
+            const existingCards = daanCardContainer.querySelectorAll('.daan-card');
+            existingCards.forEach(card => card.remove());
+
+            // Ensure the "no more daans" message is reset to hidden at initialization
+            if (noMoreDaansMessage) { // It's hardcoded, so it should exist.
+                noMoreDaansMessage.style.display = 'none';
             }
 
-            daanProfiles.forEach(profile => {
+            availableDaans.forEach(profile => {
                 const cardElement = createDaanCardElement(profile);
                 daanCardContainer.appendChild(cardElement);
             });
@@ -275,7 +305,19 @@
         }
 
         function showNoMoreDaans() {
-            if(activeCard) activeCard.style.display = 'none'; // Hide the last swiped card if any
+            if (!noMoreDaansMessage) {
+                console.error("Error: The 'no-more-daans' element was not found in the DOM. Cannot display end message.");
+                // Attempt to hide swipe actions anyway if they exist
+                if (swipeActions) swipeActions.style.display = 'none';
+                if (activeCard) activeCard.style.display = 'none';
+                if (daanCardContainer) daanCardContainer.style.height = 'auto';
+                activeCard = null;
+                return;
+            }
+
+            if (activeCard) {
+                activeCard.style.display = 'none'; // Hide the last swiped card if any
+            }
             swipeActions.style.display = 'none';
             noMoreDaansMessage.style.display = 'block';
             daanCardContainer.style.height = 'auto'; // Reset container height
@@ -283,16 +325,17 @@
         }
 
         function onDragStart(event) {
-            if (!activeCard) return;
-            isDragging = true;
-            startX = event.pageX || event.touches[0].pageX;
-            activeCard.style.transition = 'none'; // Disable transition during drag
 
             // Disable overlay transition during drag
             const noOverlay = activeCard.querySelector('.swipe-overlay-no');
             const yesOverlay = activeCard.querySelector('.swipe-overlay-yes');
             if (noOverlay) noOverlay.style.transition = 'none';
             if (yesOverlay) yesOverlay.style.transition = 'none';
+
+            if (!activeCard) return; // Check activeCard after overlay setup, though ideally it's always there if drag starts
+            isDragging = true;
+            startX = event.pageX || event.touches[0].pageX;
+            activeCard.style.transition = 'none'; // Disable transition during drag
 
             document.body.style.userSelect = 'none'; // Prevent text selection during drag
             document.addEventListener('mousemove', onDragging);
@@ -416,6 +459,7 @@
             // Wait for animation to finish, then move to next card
             setTimeout(() => {
                 activeCard.style.display = 'none'; // Hide the swiped card
+                saveSwipedDaan(activeCard.dataset.daanId); // Save swipe to localStorage
                 // Overlays will be reset to hidden by setActiveCard for the next card
                 setActiveCard(currentCardIndex + 1);
             }, 500); // Should match or be slightly longer than the transform transition duration
@@ -424,10 +468,17 @@
         noButton.addEventListener('click', () => performSwipeAnimation('left'));
         yesButton.addEventListener('click', () => performSwipeAnimation('right'));
 
+        function resetSwipes() {
+            localStorage.removeItem(SWIPED_DAANS_STORAGE_KEY);
+            initializeCards(); // Re-initialize the cards, which will show all (shuffled)
+            // setActiveCard(0) inside initializeCards will ensure buttons are shown if cards exist
+        }
+
+        resetButton.addEventListener('click', resetSwipes);
+
         // Initialize
         initializeCards();
         // Note: For SEO, ensure that critical content is renderable without JavaScript or is pre-rendered if possible.
-
     </script>
 </body>
 </html>
