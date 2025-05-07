@@ -3,7 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Only Daans - The Premier Daan Destination</title>
+    <title>OnlyDaans - Find Your Perfect Daan! | Hot Daans In Your Area</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Welcome to OnlyDaans, the premier online destination to meet and connect with amazing Daans from all walks of life. Swipe, match, and start your Daan-tastic journey today!">
+    <link rel="canonical" href="https://onlydaans.com">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://onlydaans.com">
+    <meta property="og:title" content="OnlyDaans - Find Your Perfect Daan!">
+    <meta property="og:description" content="Swipe right on your next Daan! Discover profiles, photos, and bios of eligible Daans ready to Daan-gle.">
+
     <!-- Include Tailwind CSS via CDN -->
     <style type="text/tailwindcss">
         .daan-card .image-stack {
@@ -43,10 +54,10 @@
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-0">
     <main class="w-full max-w-sm md:max-w-md lg:max-w-lg mx-auto">
         <section id="daan-swiper" class="bg-white rounded-xl shadow-xl p-6 flex flex-col items-center">
-            <h2 class="text-xl md:text-3xl font-bold text-gray-800 mb-4 text-center">🔥 Hot Daans In Your Area! 🔥</h2>
+            <h1 class="text-lg md:text-3xl font-bold text-gray-800 md:mb-4 text-center">🔥 Hot Daans In Your Area! 🔥</h1>
             <p class="text-gray-600 mb-6 text-center text-sm">They're single and ready to Daan-gle!</p>
             <div class="daan-card-container w-full relative">
                 <!-- Daan cards will be dynamically inserted here by JavaScript -->
@@ -415,6 +426,7 @@
 
         // Initialize
         initializeCards();
+        // Note: For SEO, ensure that critical content is renderable without JavaScript or is pre-rendered if possible.
 
     </script>
 </body>
